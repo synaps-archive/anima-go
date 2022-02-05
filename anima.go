@@ -42,7 +42,7 @@ func Issue(anima *models.Protocol, request *models.IssueRequest) error {
 	return protocol.Issue(anima, req)
 }
 
-// Verify - Verify Request from Anima Protocol
+// Verify - Verify Sharing Request from Anima Protocol
 func Verify(anima *models.Protocol, request *models.VerifyRequest) (*protocol.VerifyResponse, error) {
 	req := &protocol.VerifyRequest{
 		Schema:    request.Schema,
