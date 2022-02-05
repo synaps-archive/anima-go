@@ -1,0 +1,143 @@
+syntax = "proto3";
+
+package protocol;
+option go_package="protocol/;protocol";
+
+message Empty {}
+
+message IssueRequest {
+    IssueResource resource = 1;
+    IssueVerification verification = 2;
+    IssueAuthorization issuing_authorization = 3;
+}
+
+message IssueResource {
+    string id = 1;
+    int64 expires_at = 2;
+    map<string, IssueAttribute> attributes = 3;
+}
+
+message IssueAttribute {
+    bytes value = 1;
+    bytes content = 2;
+    string signature = 3;
+}
+
+message IssueVerification {
+    string schema = 1;
+    string content = 2;
+    string signature = 3;
+}
+
+message IssueAuthorization {
+    string schema = 1;
+    string content = 2;
+    string signature = 3;
+}
+
+message IssueResponse {
+    bool success = 1;
+}
+
+message VerifyRequest {
+    string schema = 1;
+    string content = 2;
+    string signature = 3;
+}
+
+message VerifyResponse {
+    VerificationContent content = 1;
+    string signature = 2;
+}
+
+message VerificationContent {
+    AnimaVerifier verifier = 1;
+    AnimaOwner owner = 2;
+    AnimaProtocol protocol = 3;
+    VerificationMain verification = 4;
+    VerificationResource resource = 5;
+    SharingAuthorization authorization = 6;
+}
+
+message SharingAuthorization {
+    string schema = 1;
+    string content = 2;
+    string signature = 3;
+}
+
+message VerificationResource {
+    string id = 1;
+    string credential = 2;
+    int64 expires_at = 3;
+    int64 issued_at = 4;
+    int64 shared_at = 5;
+    int64 verified_at = 6;
+    string type = 7;
+    map<string, AnimaCredentialAttribute> attributes = 8;
+}
+
+message AnimaCredentialAttribute {
+    AnimaCredentialAttributeContent content = 1;
+    string signature = 2;
+}
+
+message AnimaCredentialAttributeContent {
+    AnimaCredentialAttributeResource resource = 1;
+    Attribute attribute = 2;
+    AnimaOwner owner = 3;
+    AnimaIssuer issuer = 4;
+}
+
+message AnimaCredentialAttributeResource {
+    string id = 1;
+    int64 expires_at = 2;
+}
+
+message Attribute {
+    string name = 1;
+    string type = 2;
+    string value = 3;
+}
+
+message VerificationMain {
+    VerificationProofContent content = 1;
+    string signature = 2;
+}
+
+message VerificationProofContent {
+    string schema = 1;
+    string proof = 2;
+    AnimaIssuer issuer = 3;
+}
+
+message AnimaVerifier {
+    string id = 1;
+    string public_address = 2;
+    string chain = 3;
+
+}
+
+message AnimaOwner {
+    string id = 1;
+    string public_address = 2;
+    string chain = 3;
+    string wallet = 4;
+}
+
+message AnimaProtocol {
+    string id = 1;
+    string public_address = 2;
+    string chain = 3;    
+}
+
+message AnimaIssuer {
+    string id = 1;
+    string public_address = 2;
+    string chain = 3;    
+}
+
+
+service Anima {
+    rpc Issue(IssueRequest) returns (IssueResponse) {};
+    rpc Verify(VerifyRequest) returns (VerifyResponse) {};
+}
