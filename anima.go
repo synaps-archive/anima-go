@@ -1,8 +1,6 @@
 package animago
 
 import (
-	"fmt"
-
 	"github.com/anima-protocol/anima-go/core"
 	"github.com/anima-protocol/anima-go/models"
 	"github.com/anima-protocol/anima-go/protocol"
@@ -42,11 +40,12 @@ func Issue(anima *models.Protocol, request *models.IssueRequest) error {
 }
 
 // Verify - Verify Request from Anima Protocol
-func Verify(protocol *models.Protocol) error {
-	fmt.Printf("> Verify Request\n")
-	return nil
-}
+func Verify(anima *models.Protocol, request *models.VerifyRequest) (*protocol.VerifyResponse, error) {
+	req := &protocol.VerifyRequest{
+		Schema:    request.Schema,
+		Content:   request.Content,
+		Signature: request.Signature,
+	}
 
-func main() {
-	// Issue()
+	return protocol.Verify(anima, req)
 }

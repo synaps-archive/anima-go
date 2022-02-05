@@ -46,8 +46,9 @@ message VerifyRequest {
 }
 
 message VerifyResponse {
-    VerificationContent content = 1;
-    string signature = 2;
+    string schema = 1;
+    VerificationContent content = 2;
+    string signature = 3;
 }
 
 message VerificationContent {

@@ -28,3 +28,25 @@ func Issue(anima *models.Protocol, req *IssueRequest) error {
 	}
 	return nil
 }
+
+func Verify(anima *models.Protocol, req *VerifyRequest) (*VerifyResponse, error) {
+	config := &Config{Secure: false}
+	client, err := Init(config, anima)
+	if err != nil {
+		return &VerifyResponse{}, err
+	}
+
+	signature, err := ethereum.SignRequest(anima, req)
+	if err != nil {
+		return &VerifyResponse{}, err
+	}
+
+	header := metadata.New(map[string]string{"signature": signature, "chain": anima.Chain})
+	ctx := metadata.NewOutgoingContext(context.Background(), header)
+
+	res, err := client.Verify(ctx, req)
+	if err != nil {
+		return &VerifyResponse{}, err
+	}
+	return res, nil
+}
