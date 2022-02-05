@@ -2,6 +2,7 @@ package ethereum
 
 import (
 	"crypto/ecdsa"
+	"encoding/base64"
 	"encoding/hex"
 	"encoding/json"
 
@@ -133,6 +134,63 @@ func SignIssueAttribute(protocol *models.Protocol, issAttr *models.IssueAttribut
 	}
 
 	c, err := json.Marshal(content)
+	if err != nil {
+		return "", err
+	}
+
+	signature, err := Sign(protocol.PrivateKey, c)
+	if err != nil {
+		return "", err
+	}
+
+	return signature, nil
+}
+
+func SignRequest(protocol *models.Protocol, req interface{}) (string, error) {
+	message := make(map[string]interface{})
+
+	b, err := json.Marshal(req)
+	if err != nil {
+		return "", err
+	}
+
+	content := base64.StdEncoding.EncodeToString(b)
+
+	message["content"] = content
+
+	sigRequest := apitypes.TypedData{
+		Domain: apitypes.TypedDataDomain{
+			Name:    models.PROTOCOL_NAME,
+			Version: models.PROTOCOL_VERSION,
+			ChainId: math.NewHexOrDecimal256(1),
+		},
+		PrimaryType: "Main",
+		Types: apitypes.Types{
+			"EIP712Domain": []apitypes.Type{
+				{
+					Name: "name",
+					Type: "string",
+				},
+				{
+					Name: "chainId",
+					Type: "uint256",
+				},
+				{
+					Name: "version",
+					Type: "string",
+				},
+			},
+			"Main": []apitypes.Type{
+				{
+					Name: "content",
+					Type: "string",
+				},
+			},
+		},
+		Message: message,
+	}
+
+	c, err := json.Marshal(sigRequest)
 	if err != nil {
 		return "", err
 	}

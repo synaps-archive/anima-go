@@ -5,10 +5,11 @@ import (
 
 	"github.com/anima-protocol/anima-go/core"
 	"github.com/anima-protocol/anima-go/models"
+	"github.com/anima-protocol/anima-go/protocol"
 	"github.com/anima-protocol/anima-go/validators"
 )
 
-// Issue - Issue a new payload to Anima Protocol
+// Issue - Issue new credential to Anima Protocol
 func Issue(anima *models.Protocol, request *models.IssueRequest) error {
 	if err := validators.ValidateProtocol(anima); err != nil {
 		return err
@@ -19,9 +20,25 @@ func Issue(anima *models.Protocol, request *models.IssueRequest) error {
 		return err
 	}
 
-	// Send to server
+	req := &protocol.IssueRequest{
+		Resource: &protocol.IssueResource{
+			Id:         request.Resource.ID,
+			ExpiresAt:  request.Resource.ExpiresAt,
+			Attributes: signedAttributes,
+		},
+		Verification: &protocol.IssueVerification{
+			Content:   request.Verification.Content,
+			Schema:    request.Verification.Schema,
+			Signature: request.Verification.Signature,
+		},
+		IssuingAuthorization: &protocol.IssueAuthorization{
+			Content:   request.IssuingAuthorization.Content,
+			Schema:    request.IssuingAuthorization.Schema,
+			Signature: request.IssuingAuthorization.Signature,
+		},
+	}
 
-	return nil
+	return protocol.Issue(anima, req)
 }
 
 // Verify - Verify Request from Anima Protocol
