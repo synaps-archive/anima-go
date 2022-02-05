@@ -1,6 +1,9 @@
 package animago
 
 import (
+	"fmt"
+
+	"github.com/anima-protocol/anima-go/chains/ethereum"
 	"github.com/anima-protocol/anima-go/core"
 	"github.com/anima-protocol/anima-go/models"
 	"github.com/anima-protocol/anima-go/protocol"
@@ -47,5 +50,18 @@ func Verify(anima *models.Protocol, request *models.VerifyRequest) (*protocol.Ve
 		Signature: request.Signature,
 	}
 
-	return protocol.Verify(anima, req)
+	signature, err := ethereum.SignRequest(anima, req)
+	if err != nil {
+		return &protocol.VerifyResponse{}, err
+	}
+
+	res, err := protocol.Verify(anima, req)
+	if err != nil {
+		return &protocol.VerifyResponse{}, err
+	}
+
+	if signature != res.Signature {
+		return &protocol.VerifyResponse{}, fmt.Errorf("invalid verify response signature")
+	}
+	return res, nil
 }
