@@ -8,18 +8,14 @@ import (
 	"github.com/anima-protocol/anima-go/utils"
 )
 
-func ValidateProtocol(protocol *models.Protocol) error {
-	if !utils.InArray(protocol.Chain, models.AVAILABLE_CHAIN) {
+func ValidateProtocol(anima *models.Protocol) error {
+	if !utils.InArray(anima.Chain, models.AVAILABLE_CHAIN) {
 		return fmt.Errorf("chain unavailable")
 	}
 
-	if !utils.InArray(protocol.Network, models.AVAILABLE_NET) {
-		return fmt.Errorf("invalid network")
-	}
-
-	switch protocol.Chain {
+	switch anima.Chain {
 	case models.CHAIN_ETH:
-		return ethereum.RecoverAccount(protocol.PrivateKey)
+		return ethereum.RecoverAccount(anima.PrivateKey)
 	}
 	return nil
 }

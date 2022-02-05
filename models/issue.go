@@ -7,25 +7,36 @@ type IssueRequest struct {
 }
 
 type IssueVerification struct {
-	Schema    string
-	Content   string
-	Signature string
+	Schema    string `json:"schema"`
+	Content   string `json:"content"`
+	Signature string `json:"signature"`
 }
 
 type IssueAuthorization struct {
-	Schema    string
-	Content   string
-	Signature string
+	Schema    string `json:"schema"`
+	Content   string `json:"content"`
+	Signature string `json:"signature"`
 }
 
 type IssueResource struct {
-	ID         string
-	ExpiresAt  int64
-	Attributes map[string][]byte
+	ID         string            `json:"id"`
+	ExpiresAt  int64             `json:"expires_at"`
+	Attributes map[string][]byte `json:"attributes"`
 }
 
-type Protocol struct {
-	PrivateKey string
-	Network    string
-	Chain      string
+type IssueAttribute struct {
+	Attribute IssueAttributeAttr     `json:"attribute"`
+	Resource  IssueAttributeResource `json:"resource"`
+	Owner     AnimaOwner             `json:"owner"`
+	Issuer    AnimaIssuer            `json:"issuer"`
+}
+
+type IssueAttributeResource struct {
+	ID        string `json:"id"`
+	ExpiresAt int64  `json:"expires_at"`
+}
+
+type IssueAttributeAttr struct {
+	Name  string `json:"name"`
+	Value string `json:"value"`
 }
