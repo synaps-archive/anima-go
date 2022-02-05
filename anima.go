@@ -1,4 +1,4 @@
-package anima
+package animago
 
 import "fmt"
 
