@@ -11,3 +11,7 @@ func Issue() {
 func Verify() {
 	fmt.Printf("> Verify Request\n")
 }
+
+func TestSignature() {
+	fmt.Printf("> Test signature\n")
+}
