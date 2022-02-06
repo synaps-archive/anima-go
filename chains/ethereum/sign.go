@@ -125,8 +125,20 @@ func SignIssueAttribute(protocol *models.Protocol, issAttr *models.IssueAttribut
 			},
 			"Main": []apitypes.Type{
 				{
-					Name: "content",
-					Type: "string",
+					Name: "resource",
+					Type: "Resource",
+				},
+				{
+					Name: "owner",
+					Type: "Owner",
+				},
+				{
+					Name: "issuer",
+					Type: "Issuer",
+				},
+				{
+					Name: "attribute",
+					Type: "Attribute",
 				},
 			},
 		},

@@ -9,6 +9,14 @@ import (
 )
 
 func VerifySignature(publicAddress string, data []byte, userSignature string) (bool, error) {
+	if len(userSignature) < 3 {
+		return false, fmt.Errorf("invalid signature length: %d", len(userSignature))
+	}
+
+	if userSignature[0:2] == "0x" {
+		userSignature = userSignature[2:]
+	}
+
 	message, err := GetEIP712Message(data)
 	if err != nil {
 		return false, err
