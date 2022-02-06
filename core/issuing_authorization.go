@@ -11,8 +11,7 @@ import (
 
 func GetIssuingAuthorization(issuingAuthorization *models.IssueAuthorization) (models.IssuingAuthorization, error) {
 	switch issuingAuthorization.Schema {
-	// case "anima:schema:eth_issuing_authorization":
-	case "anima:schema:eth_issuing":
+	case "anima:schema:eth_issuing_authorization":
 		issBytes, err := base64.StdEncoding.DecodeString(issuingAuthorization.Content)
 		if err != nil {
 			return models.IssuingAuthorization{}, err
