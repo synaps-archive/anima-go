@@ -7,9 +7,8 @@ type IssueRequest struct {
 }
 
 type IssueVerification struct {
-	Schema    string `json:"schema"`
-	Content   string `json:"content"`
-	Signature string `json:"signature"`
+	Schema  string `json:"schema"`
+	Content string `json:"content"`
 }
 
 type IssueAuthorization struct {

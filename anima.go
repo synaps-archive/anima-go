@@ -1,6 +1,7 @@
 package anima
 
 import (
+	"github.com/anima-protocol/anima-go/chains/ethereum"
 	"github.com/anima-protocol/anima-go/core"
 	"github.com/anima-protocol/anima-go/models"
 	"github.com/anima-protocol/anima-go/protocol"
@@ -18,6 +19,11 @@ func Issue(anima *models.Protocol, request *models.IssueRequest) error {
 		return err
 	}
 
+	proofSignature, err := ethereum.SignProof(anima, request.Verification.Content)
+	if err != nil {
+		return err
+	}
+
 	req := &protocol.IssueRequest{
 		Resource: &protocol.IssueResource{
 			Id:         request.Resource.ID,
@@ -27,7 +33,7 @@ func Issue(anima *models.Protocol, request *models.IssueRequest) error {
 		Verification: &protocol.IssueVerification{
 			Content:   request.Verification.Content,
 			Schema:    request.Verification.Schema,
-			Signature: request.Verification.Signature,
+			Signature: proofSignature,
 		},
 		IssuingAuthorization: &protocol.IssueAuthorization{
 			Content:   request.IssuingAuthorization.Content,

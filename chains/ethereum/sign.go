@@ -202,3 +202,53 @@ func SignRequest(protocol *models.Protocol, req interface{}) (string, error) {
 
 	return signature, nil
 }
+
+func SignProof(protocol *models.Protocol, proof string) (string, error) {
+	message := make(map[string]interface{})
+
+	message["content"] = proof
+
+	sigRequest := apitypes.TypedData{
+		Domain: apitypes.TypedDataDomain{
+			Name:    models.PROTOCOL_NAME,
+			Version: models.PROTOCOL_VERSION,
+			ChainId: math.NewHexOrDecimal256(1),
+		},
+		PrimaryType: "Main",
+		Types: apitypes.Types{
+			"EIP712Domain": []apitypes.Type{
+				{
+					Name: "name",
+					Type: "string",
+				},
+				{
+					Name: "chainId",
+					Type: "uint256",
+				},
+				{
+					Name: "version",
+					Type: "string",
+				},
+			},
+			"Main": []apitypes.Type{
+				{
+					Name: "content",
+					Type: "string",
+				},
+			},
+		},
+		Message: message,
+	}
+
+	c, err := json.Marshal(sigRequest)
+	if err != nil {
+		return "", err
+	}
+
+	signature, err := Sign(protocol.PrivateKey, c)
+	if err != nil {
+		return "", err
+	}
+
+	return signature, nil
+}
