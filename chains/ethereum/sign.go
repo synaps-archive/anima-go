@@ -119,6 +119,10 @@ func SignIssueAttribute(protocol *models.Protocol, issAttr *models.IssueAttribut
 					Type: "string",
 				},
 				{
+					Name: "type",
+					Type: "string",
+				},
+				{
 					Name: "value",
 					Type: "string",
 				},
