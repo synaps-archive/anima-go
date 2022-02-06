@@ -20,10 +20,10 @@ type IssueAuthorization struct {
 type IssueResource struct {
 	ID         string               `json:"id"`
 	ExpiresAt  int64                `json:"expires_at"`
-	Attributes map[string]IssueAttr `json:"attributes"`
+	Attributes map[string]Attribute `json:"attributes"`
 }
 
-type IssueAttr struct {
+type Attribute struct {
 	Value []byte `json:"value"`
 	Type  string `json:"type"`
 }
