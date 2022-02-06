@@ -19,7 +19,7 @@ type IssueAuthorization struct {
 
 type IssueResource struct {
 	ID         string               `json:"id"`
-	ExpiresAt  int64                `json:"expires_at"`
+	ExpiresAt  string               `json:"expires_at"`
 	Attributes map[string]Attribute `json:"attributes"`
 }
 
@@ -37,7 +37,7 @@ type IssueAttribute struct {
 
 type IssueAttributeResource struct {
 	ID        string `json:"id"`
-	ExpiresAt int64  `json:"expires_at"`
+	ExpiresAt string `json:"expires_at"`
 }
 
 type IssueAttributeAttr struct {
