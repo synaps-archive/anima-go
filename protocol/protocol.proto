@@ -1,6 +1,6 @@
 syntax = "proto3";
 
-package protocol;
+package anima;
 option go_package="protocol/;protocol";
 
 message Empty {}

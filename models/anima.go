@@ -10,7 +10,7 @@ type AnimaOwner struct {
 	ID                  string `json:"id"`
 	PublicAddress       string `json:"public_address"`
 	Chain               string `json:"chain"`
-	Wallet              string `json:"wallet"`
+	Wallet              string `json:"wallet,omitempty"`
 	PublicKeyEncryption string `json:"public_key_encryption,omitempty"`
 }
 
