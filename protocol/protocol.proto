@@ -13,7 +13,7 @@ message IssueRequest {
 
 message IssueResource {
     string id = 1;
-    int64 expires_at = 2;
+    string expires_at = 2;
     map<string, IssueAttribute> attributes = 3;
 }
 
@@ -69,10 +69,10 @@ message SharingAuthorization {
 message VerificationResource {
     string id = 1;
     string credential = 2;
-    int64 expires_at = 3;
-    int64 issued_at = 4;
-    int64 shared_at = 5;
-    int64 verified_at = 6;
+    string expires_at = 3;
+    string issued_at = 4;
+    string shared_at = 5;
+    string verified_at = 6;
     string type = 7;
     map<string, AnimaCredentialAttribute> attributes = 8;
 }
@@ -91,7 +91,7 @@ message AnimaCredentialAttributeContent {
 
 message AnimaCredentialAttributeResource {
     string id = 1;
-    int64 expires_at = 2;
+    string expires_at = 2;
 }
 
 message Attribute {

@@ -5,7 +5,6 @@ import (
 	"github.com/anima-protocol/anima-go/core"
 	"github.com/anima-protocol/anima-go/models"
 	"github.com/anima-protocol/anima-go/protocol"
-	"github.com/anima-protocol/anima-go/utils"
 	"github.com/anima-protocol/anima-go/validators"
 )
 
@@ -28,7 +27,7 @@ func Issue(anima *models.Protocol, request *models.IssueRequest) error {
 	req := &protocol.IssueRequest{
 		Resource: &protocol.IssueResource{
 			Id:         request.Resource.ID,
-			ExpiresAt:  utils.StrToInt64(request.Resource.ExpiresAt),
+			ExpiresAt:  request.Resource.ExpiresAt,
 			Attributes: signedAttributes,
 		},
 		Verification: &protocol.IssueVerification{
