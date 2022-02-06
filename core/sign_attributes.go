@@ -1,7 +1,7 @@
 package core
 
 import (
-	"encoding/json"
+	"encoding/base64"
 
 	"github.com/anima-protocol/anima-go/chains/ethereum"
 	"github.com/anima-protocol/anima-go/crypto"
@@ -41,17 +41,14 @@ func SignAttributes(anima *models.Protocol, issuingAuthorization *models.IssueAu
 			},
 		}
 
-		content, err := json.Marshal(issAttr)
-		if err != nil {
-			return nil, err
-		}
-
 		switch anima.Chain {
 		case models.CHAIN_ETH:
-			signature, err := ethereum.SignIssueAttribute(anima, &issAttr)
+			signedContent, signature, err := ethereum.SignIssueAttribute(anima, &issAttr)
 			if err != nil {
 				return nil, err
 			}
+
+			content := base64.StdEncoding.EncodeToString(signedContent)
 
 			signedAttributes[name] = &protocol.IssueAttribute{
 				Value:     attr.Value,

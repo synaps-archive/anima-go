@@ -19,7 +19,7 @@ message IssueResource {
 
 message IssueAttribute {
     bytes value = 1;
-    bytes content = 2;
+    string content = 2;
     string signature = 3;
 }
 

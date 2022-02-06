@@ -41,16 +41,16 @@ func Sign(privateKey string, data []byte) (string, error) {
 	return "0x" + hex.EncodeToString(sig), nil
 }
 
-func SignIssueAttribute(protocol *models.Protocol, issAttr *models.IssueAttribute) (string, error) {
+func SignIssueAttribute(protocol *models.Protocol, issAttr *models.IssueAttribute) ([]byte, string, error) {
 	message := make(map[string]interface{})
 
 	b, err := json.Marshal(issAttr)
 	if err != nil {
-		return "", err
+		return []byte{}, "", err
 	}
 
 	if err := json.Unmarshal(b, &message); err != nil {
-		return "", err
+		return []byte{}, "", err
 	}
 
 	content := apitypes.TypedData{
@@ -151,15 +151,15 @@ func SignIssueAttribute(protocol *models.Protocol, issAttr *models.IssueAttribut
 
 	c, err := json.Marshal(content)
 	if err != nil {
-		return "", err
+		return []byte{}, "", err
 	}
 
 	signature, err := Sign(protocol.PrivateKey, c)
 	if err != nil {
-		return "", err
+		return []byte{}, "", err
 	}
 
-	return signature, nil
+	return c, signature, nil
 }
 
 func SignRequest(protocol *models.Protocol, req interface{}) (string, error) {
