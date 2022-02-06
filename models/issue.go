@@ -19,9 +19,14 @@ type IssueAuthorization struct {
 }
 
 type IssueResource struct {
-	ID         string            `json:"id"`
-	ExpiresAt  int64             `json:"expires_at"`
-	Attributes map[string][]byte `json:"attributes"`
+	ID         string             `json:"id"`
+	ExpiresAt  int64              `json:"expires_at"`
+	Attributes map[string]ReqAttr `json:"attributes"`
+}
+
+type ReqAttr struct {
+	Value []byte `json:"value"`
+	Type  string `json:"type"`
 }
 
 type IssueAttribute struct {
@@ -39,4 +44,5 @@ type IssueAttributeResource struct {
 type IssueAttributeAttr struct {
 	Name  string `json:"name"`
 	Value string `json:"value"`
+	Type  string `json:"type"`
 }

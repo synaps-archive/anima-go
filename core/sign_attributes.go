@@ -18,18 +18,27 @@ func SignAttributes(anima *models.Protocol, issuingAuthorization *models.IssueAu
 	}
 
 	for name := range resource.Attributes {
-		value := resource.Attributes[name]
+		attr := resource.Attributes[name]
 		issAttr := models.IssueAttribute{
-			Attribute: models.IssueAttributeAttr{
-				Name:  name,
-				Value: crypto.Hash(value),
-			},
 			Resource: models.IssueAttributeResource{
 				ID:        issAuthorization.Request.Resource,
 				ExpiresAt: resource.ExpiresAt,
 			},
-			Owner:  issAuthorization.Owner,
-			Issuer: issAuthorization.Issuer,
+			Attribute: models.IssueAttributeAttr{
+				Name:  name,
+				Value: crypto.Hash(attr.Value),
+				Type:  attr.Type,
+			},
+			Owner: models.AnimaOwner{
+				ID:            issAuthorization.Owner.ID,
+				PublicAddress: issAuthorization.Owner.PublicAddress,
+				Chain:         issAuthorization.Owner.Chain,
+			},
+			Issuer: models.AnimaIssuer{
+				ID:            issAuthorization.Issuer.ID,
+				PublicAddress: issAuthorization.Issuer.PublicAddress,
+				Chain:         issAuthorization.Issuer.Chain,
+			},
 		}
 
 		content, err := json.Marshal(issAttr)
@@ -45,7 +54,7 @@ func SignAttributes(anima *models.Protocol, issuingAuthorization *models.IssueAu
 			}
 
 			signedAttributes[name] = &protocol.IssueAttribute{
-				Value:     value,
+				Value:     attr.Value,
 				Content:   content,
 				Signature: signature,
 			}
