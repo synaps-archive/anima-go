@@ -47,6 +47,10 @@ func Issue(anima *models.Protocol, request *models.IssueRequest) error {
 
 // Verify - Verify Sharing Request from Anima Protocol
 func Verify(anima *models.Protocol, request *models.VerifyRequest) (*protocol.VerifyResponse, error) {
+	if err := validators.ValidateProtocol(anima); err != nil {
+		return &protocol.VerifyResponse{}, err
+	}
+
 	req := &protocol.VerifyRequest{
 		Schema:    request.Schema,
 		Content:   request.Content,

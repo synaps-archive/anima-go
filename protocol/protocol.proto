@@ -54,10 +54,11 @@ message VerifyResponse {
 message VerificationContent {
     AnimaVerifier verifier = 1;
     AnimaOwner owner = 2;
-    AnimaProtocol protocol = 3;
-    VerificationMain verification = 4;
-    VerificationResource resource = 5;
-    SharingAuthorization authorization = 6;
+    AnimaIssuer issuer = 3;
+    AnimaProtocol protocol = 4;
+    VerificationProof proof = 5;
+    VerificationResource resource = 6;
+    SharingAuthorization authorization = 7;
 }
 
 message SharingAuthorization {
@@ -100,15 +101,11 @@ message Attribute {
     string value = 3;
 }
 
-message VerificationMain {
-    VerificationProofContent content = 1;
-    string signature = 2;
-}
 
-message VerificationProofContent {
+message VerificationProof {
     string schema = 1;
-    string proof = 2;
-    AnimaIssuer issuer = 3;
+    string content = 2;
+    string signature = 3;
 }
 
 message AnimaVerifier {
