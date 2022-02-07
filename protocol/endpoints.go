@@ -48,5 +48,6 @@ func Verify(anima *models.Protocol, req *VerifyRequest) (*VerifyResponse, error)
 	if err != nil {
 		return &VerifyResponse{}, err
 	}
+
 	return res, nil
 }

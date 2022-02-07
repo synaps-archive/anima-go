@@ -105,7 +105,8 @@ message Attribute {
 message VerificationProof {
     string schema = 1;
     string content = 2;
-    string signature = 3;
+    bytes data = 3;
+    string signature = 4;
 }
 
 message AnimaVerifier {
