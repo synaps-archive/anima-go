@@ -219,7 +219,7 @@ func SignRequest(protocol *models.Protocol, req interface{}) (string, error) {
 	return signature, nil
 }
 
-func SignProof(protocol *models.Protocol, proof string) (string, error) {
+func SignProof(protocol *models.Protocol, proof string) (string, string, error) {
 	message := make(map[string]interface{})
 
 	message["content"] = proof
@@ -258,13 +258,15 @@ func SignProof(protocol *models.Protocol, proof string) (string, error) {
 
 	c, err := json.Marshal(sigRequest)
 	if err != nil {
-		return "", err
+		return "", "", err
 	}
 
 	signature, err := Sign(protocol.PrivateKey, c)
 	if err != nil {
-		return "", err
+		return "", "", err
 	}
 
-	return signature, nil
+	sigRequestEncoded := base64.StdEncoding.EncodeToString(c)
+
+	return sigRequestEncoded, signature, nil
 }

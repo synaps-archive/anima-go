@@ -19,7 +19,7 @@ func Issue(anima *models.Protocol, request *models.IssueRequest) error {
 		return err
 	}
 
-	proofSignature, err := ethereum.SignProof(anima, request.Verification.Content)
+	proofContent, proofSignature, err := ethereum.SignProof(anima, request.Verification.Content)
 	if err != nil {
 		return err
 	}
@@ -31,7 +31,7 @@ func Issue(anima *models.Protocol, request *models.IssueRequest) error {
 			Attributes: signedAttributes,
 		},
 		Verification: &protocol.IssueVerification{
-			Content:   request.Verification.Content,
+			Content:   proofContent,
 			Schema:    request.Verification.Schema,
 			Signature: proofSignature,
 		},
