@@ -1,47 +1,15 @@
 package ethereum
 
 import (
-	"crypto/ecdsa"
 	"encoding/base64"
-	"encoding/hex"
 	"encoding/json"
 
 	"github.com/anima-protocol/anima-go/models"
 	"github.com/ethereum/go-ethereum/common/math"
-	"github.com/ethereum/go-ethereum/crypto"
 	"github.com/ethereum/go-ethereum/signer/core/apitypes"
 )
 
-func Sign(privateKey string, data []byte) (string, error) {
-	hashChallenge, err := GetEIP712Message(data)
-	if err != nil {
-		return "", err
-	}
-
-	var key *ecdsa.PrivateKey
-	var bytes []byte
-
-	if b, err := hex.DecodeString(privateKey); err != nil {
-		return "", err
-	} else {
-		bytes = b
-	}
-	if pk, err := crypto.ToECDSA(bytes); err != nil {
-		return "", err
-	} else {
-		key = pk
-	}
-	sig, err := crypto.Sign(hashChallenge, key)
-	if err != nil {
-		return "", err
-	}
-
-	sig[64] += 27
-
-	return "0x" + hex.EncodeToString(sig), nil
-}
-
-func SignIssueAttribute(protocol *models.Protocol, issAttr *models.IssueAttribute) ([]byte, string, error) {
+func SignIssueAttribute(protocol *models.Protocol, issAttr *models.IssueAttribute, signingFunc func([]byte) (string, error)) ([]byte, string, error) {
 	message := make(map[string]interface{})
 
 	b, err := json.Marshal(issAttr)
@@ -154,7 +122,12 @@ func SignIssueAttribute(protocol *models.Protocol, issAttr *models.IssueAttribut
 		return []byte{}, "", err
 	}
 
-	signature, err := Sign(protocol.PrivateKey, c)
+	digest, err := GetEIP712Message(c)
+	if err != nil {
+		return []byte{}, "", err
+	}
+
+	signature, err := signingFunc(digest)
 	if err != nil {
 		return []byte{}, "", err
 	}
@@ -162,7 +135,7 @@ func SignIssueAttribute(protocol *models.Protocol, issAttr *models.IssueAttribut
 	return c, signature, nil
 }
 
-func SignRequest(protocol *models.Protocol, req interface{}) (string, error) {
+func SignRequest(protocol *models.Protocol, req interface{}, signingFunc func([]byte) (string, error)) (string, error) {
 	message := make(map[string]interface{})
 
 	b, err := json.Marshal(req)
@@ -211,7 +184,7 @@ func SignRequest(protocol *models.Protocol, req interface{}) (string, error) {
 		return "", err
 	}
 
-	signature, err := Sign(protocol.PrivateKey, c)
+	signature, err := signingFunc(c)
 	if err != nil {
 		return "", err
 	}
@@ -219,7 +192,7 @@ func SignRequest(protocol *models.Protocol, req interface{}) (string, error) {
 	return signature, nil
 }
 
-func SignProof(protocol *models.Protocol, proof string) (string, string, error) {
+func SignProof(protocol *models.Protocol, proof string, signingFunc func([]byte) (string, error)) (string, string, error) {
 	message := make(map[string]interface{})
 
 	message["content"] = proof
@@ -261,7 +234,7 @@ func SignProof(protocol *models.Protocol, proof string) (string, string, error) 
 		return "", "", err
 	}
 
-	signature, err := Sign(protocol.PrivateKey, c)
+	signature, err := signingFunc(c)
 	if err != nil {
 		return "", "", err
 	}

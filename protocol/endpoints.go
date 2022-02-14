@@ -15,7 +15,7 @@ func Issue(anima *models.Protocol, req *IssueRequest) error {
 		return err
 	}
 
-	signature, err := ethereum.SignRequest(anima, req)
+	signature, err := ethereum.SignRequest(anima, req, anima.SigningFunc)
 	if err != nil {
 		return err
 	}
@@ -36,7 +36,7 @@ func Verify(anima *models.Protocol, req *VerifyRequest) (*VerifyResponse, error)
 		return &VerifyResponse{}, err
 	}
 
-	signature, err := ethereum.SignRequest(anima, req)
+	signature, err := ethereum.SignRequest(anima, req, anima.SigningFunc)
 	if err != nil {
 		return &VerifyResponse{}, err
 	}

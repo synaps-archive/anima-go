@@ -9,7 +9,7 @@ import (
 	"github.com/anima-protocol/anima-go/protocol"
 )
 
-func SignAttributes(anima *models.Protocol, issuingAuthorization *models.IssueAuthorization, resource *models.IssueResource) (map[string]*protocol.IssueAttribute, error) {
+func SignAttributes(anima *models.Protocol, issuingAuthorization *models.IssueAuthorization, resource *models.IssueResource, signingFunc func([]byte) (string, error)) (map[string]*protocol.IssueAttribute, error) {
 	signedAttributes := make(map[string]*protocol.IssueAttribute)
 
 	issAuthorization, err := GetIssuingAuthorization(issuingAuthorization)
@@ -43,7 +43,7 @@ func SignAttributes(anima *models.Protocol, issuingAuthorization *models.IssueAu
 
 		switch anima.Chain {
 		case models.CHAIN_ETH:
-			signedContent, signature, err := ethereum.SignIssueAttribute(anima, &issAttr)
+			signedContent, signature, err := ethereum.SignIssueAttribute(anima, &issAttr, signingFunc)
 			if err != nil {
 				return nil, err
 			}

@@ -1,9 +1,9 @@
 package models
 
 type Protocol struct {
-	PrivateKey string
-	Network    string
-	Chain      string
+	Network     string                       `json:"network"`
+	Chain       string                       `json:"chain"`
+	SigningFunc func([]byte) (string, error) `json:"signing_func"`
 }
 
 type AnimaOwner struct {

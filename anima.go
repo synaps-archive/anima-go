@@ -14,12 +14,12 @@ func Issue(anima *models.Protocol, request *models.IssueRequest) error {
 		return err
 	}
 
-	signedAttributes, err := core.SignAttributes(anima, request.IssuingAuthorization, request.Resource)
+	signedAttributes, err := core.SignAttributes(anima, request.IssuingAuthorization, request.Resource, anima.SigningFunc)
 	if err != nil {
 		return err
 	}
 
-	proofContent, proofSignature, err := ethereum.SignProof(anima, request.Verification.Content)
+	proofContent, proofSignature, err := ethereum.SignProof(anima, request.Verification.Content, anima.SigningFunc)
 	if err != nil {
 		return err
 	}
