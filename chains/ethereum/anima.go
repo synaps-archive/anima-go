@@ -4,6 +4,7 @@ import (
 	"encoding/base64"
 	"encoding/json"
 
+	"github.com/anima-protocol/anima-go/crypto"
 	"github.com/anima-protocol/anima-go/models"
 	"github.com/ethereum/go-ethereum/common/math"
 	"github.com/ethereum/go-ethereum/signer/core/apitypes"
@@ -145,7 +146,7 @@ func SignRequest(protocol *models.Protocol, req interface{}, signingFunc func([]
 
 	content := base64.StdEncoding.EncodeToString(b)
 
-	message["content"] = content
+	message["content"] = crypto.Hash([]byte(content))
 
 	sigRequest := apitypes.TypedData{
 		Domain: apitypes.TypedDataDomain{
@@ -184,7 +185,12 @@ func SignRequest(protocol *models.Protocol, req interface{}, signingFunc func([]
 		return "", err
 	}
 
-	signature, err := signingFunc(c)
+	digest, err := GetEIP712Message(c)
+	if err != nil {
+		return "", err
+	}
+
+	signature, err := signingFunc(digest)
 	if err != nil {
 		return "", err
 	}
@@ -195,7 +201,7 @@ func SignRequest(protocol *models.Protocol, req interface{}, signingFunc func([]
 func SignProof(protocol *models.Protocol, proof string, signingFunc func([]byte) (string, error)) (string, string, error) {
 	message := make(map[string]interface{})
 
-	message["content"] = proof
+	message["content"] = crypto.Hash([]byte(proof))
 
 	sigRequest := apitypes.TypedData{
 		Domain: apitypes.TypedDataDomain{
@@ -234,7 +240,12 @@ func SignProof(protocol *models.Protocol, proof string, signingFunc func([]byte)
 		return "", "", err
 	}
 
-	signature, err := signingFunc(c)
+	digest, err := GetEIP712Message(c)
+	if err != nil {
+		return "", "", err
+	}
+
+	signature, err := signingFunc(digest)
 	if err != nil {
 		return "", "", err
 	}
