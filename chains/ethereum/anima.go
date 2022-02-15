@@ -144,9 +144,7 @@ func SignRequest(protocol *models.Protocol, req interface{}, signingFunc func([]
 		return "", err
 	}
 
-	content := base64.StdEncoding.EncodeToString(b)
-
-	message["content"] = crypto.Hash([]byte(content))
+	message["content"] = crypto.Hash([]byte(b))
 
 	sigRequest := apitypes.TypedData{
 		Domain: apitypes.TypedDataDomain{
