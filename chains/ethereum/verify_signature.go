@@ -31,10 +31,13 @@ func VerifySignature(publicAddress string, data []byte, userSignature string) (b
 		return false, fmt.Errorf("invalid signature length: %d", len(signature))
 	}
 
-	if signature[64] != 27 && signature[64] != 28 {
+	if signature[64] == 27 || signature[64] == 28 {
+		signature[64] -= 27
+	}
+
+	if signature[64] != 0 && signature[64] != 1 {
 		return false, fmt.Errorf("invalid recovery id: %d", signature[64])
 	}
-	signature[64] -= 27
 
 	pubKeyRaw, err := crypto.Ecrecover(message, signature)
 	if err != nil {
