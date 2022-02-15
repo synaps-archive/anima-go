@@ -64,3 +64,23 @@ func Verify(anima *models.Protocol, request *models.VerifyRequest) (*protocol.Ve
 
 	return res, nil
 }
+
+// RegisterVerifier - Register Verifier on Anima Protocol
+func RegisterVerifier(anima *models.Protocol, request *models.RegisterVerifierRequest) (*protocol.RegisterVerifierResponse, error) {
+	if err := validators.ValidateProtocol(anima); err != nil {
+		return &protocol.RegisterVerifierResponse{}, err
+	}
+
+	req := &protocol.RegisterVerifierRequest{
+		Id:            request.Id,
+		PublicAddress: request.PublicAddress,
+		Chain:         request.Chain,
+	}
+
+	res, err := protocol.RegisterVerifier(anima, req)
+	if err != nil {
+		return &protocol.RegisterVerifierResponse{}, err
+	}
+
+	return res, nil
+}

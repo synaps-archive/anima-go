@@ -1386,6 +1386,116 @@ func (x *AnimaIssuer) GetChain() string {
 	return ""
 }
 
+type RegisterVerifierRequest struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	Id            string `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
+	PublicAddress string `protobuf:"bytes,2,opt,name=public_address,json=publicAddress,proto3" json:"public_address,omitempty"`
+	Chain         string `protobuf:"bytes,3,opt,name=chain,proto3" json:"chain,omitempty"`
+}
+
+func (x *RegisterVerifierRequest) Reset() {
+	*x = RegisterVerifierRequest{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_protocol_protocol_proto_msgTypes[21]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *RegisterVerifierRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*RegisterVerifierRequest) ProtoMessage() {}
+
+func (x *RegisterVerifierRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_protocol_protocol_proto_msgTypes[21]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use RegisterVerifierRequest.ProtoReflect.Descriptor instead.
+func (*RegisterVerifierRequest) Descriptor() ([]byte, []int) {
+	return file_protocol_protocol_proto_rawDescGZIP(), []int{21}
+}
+
+func (x *RegisterVerifierRequest) GetId() string {
+	if x != nil {
+		return x.Id
+	}
+	return ""
+}
+
+func (x *RegisterVerifierRequest) GetPublicAddress() string {
+	if x != nil {
+		return x.PublicAddress
+	}
+	return ""
+}
+
+func (x *RegisterVerifierRequest) GetChain() string {
+	if x != nil {
+		return x.Chain
+	}
+	return ""
+}
+
+type RegisterVerifierResponse struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	Success bool `protobuf:"varint,1,opt,name=success,proto3" json:"success,omitempty"`
+}
+
+func (x *RegisterVerifierResponse) Reset() {
+	*x = RegisterVerifierResponse{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_protocol_protocol_proto_msgTypes[22]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *RegisterVerifierResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*RegisterVerifierResponse) ProtoMessage() {}
+
+func (x *RegisterVerifierResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_protocol_protocol_proto_msgTypes[22]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use RegisterVerifierResponse.ProtoReflect.Descriptor instead.
+func (*RegisterVerifierResponse) Descriptor() ([]byte, []int) {
+	return file_protocol_protocol_proto_rawDescGZIP(), []int{22}
+}
+
+func (x *RegisterVerifierResponse) GetSuccess() bool {
+	if x != nil {
+		return x.Success
+	}
+	return false
+}
+
 var File_protocol_protocol_proto protoreflect.FileDescriptor
 
 var file_protocol_protocol_proto_rawDesc = []byte{
@@ -1573,16 +1683,31 @@ var file_protocol_protocol_proto_rawDesc = []byte{
 	0x64, 0x64, 0x72, 0x65, 0x73, 0x73, 0x18, 0x02, 0x20, 0x01, 0x28, 0x09, 0x52, 0x0d, 0x70, 0x75,
 	0x62, 0x6c, 0x69, 0x63, 0x41, 0x64, 0x64, 0x72, 0x65, 0x73, 0x73, 0x12, 0x14, 0x0a, 0x05, 0x63,
 	0x68, 0x61, 0x69, 0x6e, 0x18, 0x03, 0x20, 0x01, 0x28, 0x09, 0x52, 0x05, 0x63, 0x68, 0x61, 0x69,
-	0x6e, 0x32, 0x76, 0x0a, 0x05, 0x41, 0x6e, 0x69, 0x6d, 0x61, 0x12, 0x34, 0x0a, 0x05, 0x49, 0x73,
-	0x73, 0x75, 0x65, 0x12, 0x13, 0x2e, 0x61, 0x6e, 0x69, 0x6d, 0x61, 0x2e, 0x49, 0x73, 0x73, 0x75,
-	0x65, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x1a, 0x14, 0x2e, 0x61, 0x6e, 0x69, 0x6d, 0x61,
-	0x2e, 0x49, 0x73, 0x73, 0x75, 0x65, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x22, 0x00,
-	0x12, 0x37, 0x0a, 0x06, 0x56, 0x65, 0x72, 0x69, 0x66, 0x79, 0x12, 0x14, 0x2e, 0x61, 0x6e, 0x69,
-	0x6d, 0x61, 0x2e, 0x56, 0x65, 0x72, 0x69, 0x66, 0x79, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74,
-	0x1a, 0x15, 0x2e, 0x61, 0x6e, 0x69, 0x6d, 0x61, 0x2e, 0x56, 0x65, 0x72, 0x69, 0x66, 0x79, 0x52,
-	0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x22, 0x00, 0x42, 0x14, 0x5a, 0x12, 0x70, 0x72, 0x6f,
-	0x74, 0x6f, 0x63, 0x6f, 0x6c, 0x2f, 0x3b, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x63, 0x6f, 0x6c, 0x62,
-	0x06, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x33,
+	0x6e, 0x22, 0x66, 0x0a, 0x17, 0x52, 0x65, 0x67, 0x69, 0x73, 0x74, 0x65, 0x72, 0x56, 0x65, 0x72,
+	0x69, 0x66, 0x69, 0x65, 0x72, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x12, 0x0e, 0x0a, 0x02,
+	0x69, 0x64, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x02, 0x69, 0x64, 0x12, 0x25, 0x0a, 0x0e,
+	0x70, 0x75, 0x62, 0x6c, 0x69, 0x63, 0x5f, 0x61, 0x64, 0x64, 0x72, 0x65, 0x73, 0x73, 0x18, 0x02,
+	0x20, 0x01, 0x28, 0x09, 0x52, 0x0d, 0x70, 0x75, 0x62, 0x6c, 0x69, 0x63, 0x41, 0x64, 0x64, 0x72,
+	0x65, 0x73, 0x73, 0x12, 0x14, 0x0a, 0x05, 0x63, 0x68, 0x61, 0x69, 0x6e, 0x18, 0x03, 0x20, 0x01,
+	0x28, 0x09, 0x52, 0x05, 0x63, 0x68, 0x61, 0x69, 0x6e, 0x22, 0x34, 0x0a, 0x18, 0x52, 0x65, 0x67,
+	0x69, 0x73, 0x74, 0x65, 0x72, 0x56, 0x65, 0x72, 0x69, 0x66, 0x69, 0x65, 0x72, 0x52, 0x65, 0x73,
+	0x70, 0x6f, 0x6e, 0x73, 0x65, 0x12, 0x18, 0x0a, 0x07, 0x73, 0x75, 0x63, 0x63, 0x65, 0x73, 0x73,
+	0x18, 0x01, 0x20, 0x01, 0x28, 0x08, 0x52, 0x07, 0x73, 0x75, 0x63, 0x63, 0x65, 0x73, 0x73, 0x32,
+	0xcd, 0x01, 0x0a, 0x05, 0x41, 0x6e, 0x69, 0x6d, 0x61, 0x12, 0x34, 0x0a, 0x05, 0x49, 0x73, 0x73,
+	0x75, 0x65, 0x12, 0x13, 0x2e, 0x61, 0x6e, 0x69, 0x6d, 0x61, 0x2e, 0x49, 0x73, 0x73, 0x75, 0x65,
+	0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x1a, 0x14, 0x2e, 0x61, 0x6e, 0x69, 0x6d, 0x61, 0x2e,
+	0x49, 0x73, 0x73, 0x75, 0x65, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x22, 0x00, 0x12,
+	0x37, 0x0a, 0x06, 0x56, 0x65, 0x72, 0x69, 0x66, 0x79, 0x12, 0x14, 0x2e, 0x61, 0x6e, 0x69, 0x6d,
+	0x61, 0x2e, 0x56, 0x65, 0x72, 0x69, 0x66, 0x79, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x1a,
+	0x15, 0x2e, 0x61, 0x6e, 0x69, 0x6d, 0x61, 0x2e, 0x56, 0x65, 0x72, 0x69, 0x66, 0x79, 0x52, 0x65,
+	0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x22, 0x00, 0x12, 0x55, 0x0a, 0x10, 0x52, 0x65, 0x67, 0x69,
+	0x73, 0x74, 0x65, 0x72, 0x56, 0x65, 0x72, 0x69, 0x66, 0x69, 0x65, 0x72, 0x12, 0x1e, 0x2e, 0x61,
+	0x6e, 0x69, 0x6d, 0x61, 0x2e, 0x52, 0x65, 0x67, 0x69, 0x73, 0x74, 0x65, 0x72, 0x56, 0x65, 0x72,
+	0x69, 0x66, 0x69, 0x65, 0x72, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x1a, 0x1f, 0x2e, 0x61,
+	0x6e, 0x69, 0x6d, 0x61, 0x2e, 0x52, 0x65, 0x67, 0x69, 0x73, 0x74, 0x65, 0x72, 0x56, 0x65, 0x72,
+	0x69, 0x66, 0x69, 0x65, 0x72, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x22, 0x00, 0x42,
+	0x14, 0x5a, 0x12, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x63, 0x6f, 0x6c, 0x2f, 0x3b, 0x70, 0x72, 0x6f,
+	0x74, 0x6f, 0x63, 0x6f, 0x6c, 0x62, 0x06, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x33,
 }
 
 var (
@@ -1597,7 +1722,7 @@ func file_protocol_protocol_proto_rawDescGZIP() []byte {
 	return file_protocol_protocol_proto_rawDescData
 }
 
-var file_protocol_protocol_proto_msgTypes = make([]protoimpl.MessageInfo, 23)
+var file_protocol_protocol_proto_msgTypes = make([]protoimpl.MessageInfo, 25)
 var file_protocol_protocol_proto_goTypes = []interface{}{
 	(*Empty)(nil),                            // 0: anima.Empty
 	(*IssueRequest)(nil),                     // 1: anima.IssueRequest
@@ -1620,14 +1745,16 @@ var file_protocol_protocol_proto_goTypes = []interface{}{
 	(*AnimaOwner)(nil),                       // 18: anima.AnimaOwner
 	(*AnimaProtocol)(nil),                    // 19: anima.AnimaProtocol
 	(*AnimaIssuer)(nil),                      // 20: anima.AnimaIssuer
-	nil,                                      // 21: anima.IssueResource.AttributesEntry
-	nil,                                      // 22: anima.VerificationResource.AttributesEntry
+	(*RegisterVerifierRequest)(nil),          // 21: anima.RegisterVerifierRequest
+	(*RegisterVerifierResponse)(nil),         // 22: anima.RegisterVerifierResponse
+	nil,                                      // 23: anima.IssueResource.AttributesEntry
+	nil,                                      // 24: anima.VerificationResource.AttributesEntry
 }
 var file_protocol_protocol_proto_depIdxs = []int32{
 	2,  // 0: anima.IssueRequest.resource:type_name -> anima.IssueResource
 	4,  // 1: anima.IssueRequest.verification:type_name -> anima.IssueVerification
 	5,  // 2: anima.IssueRequest.issuing_authorization:type_name -> anima.IssueAuthorization
-	21, // 3: anima.IssueResource.attributes:type_name -> anima.IssueResource.AttributesEntry
+	23, // 3: anima.IssueResource.attributes:type_name -> anima.IssueResource.AttributesEntry
 	9,  // 4: anima.VerifyResponse.content:type_name -> anima.VerificationContent
 	17, // 5: anima.VerificationContent.verifier:type_name -> anima.AnimaVerifier
 	18, // 6: anima.VerificationContent.owner:type_name -> anima.AnimaOwner
@@ -1636,7 +1763,7 @@ var file_protocol_protocol_proto_depIdxs = []int32{
 	16, // 9: anima.VerificationContent.proof:type_name -> anima.VerificationProof
 	11, // 10: anima.VerificationContent.resource:type_name -> anima.VerificationResource
 	10, // 11: anima.VerificationContent.authorization:type_name -> anima.SharingAuthorization
-	22, // 12: anima.VerificationResource.attributes:type_name -> anima.VerificationResource.AttributesEntry
+	24, // 12: anima.VerificationResource.attributes:type_name -> anima.VerificationResource.AttributesEntry
 	13, // 13: anima.AnimaCredentialAttribute.content:type_name -> anima.AnimaCredentialAttributeContent
 	14, // 14: anima.AnimaCredentialAttributeContent.resource:type_name -> anima.AnimaCredentialAttributeResource
 	15, // 15: anima.AnimaCredentialAttributeContent.attribute:type_name -> anima.Attribute
@@ -1646,10 +1773,12 @@ var file_protocol_protocol_proto_depIdxs = []int32{
 	12, // 19: anima.VerificationResource.AttributesEntry.value:type_name -> anima.AnimaCredentialAttribute
 	1,  // 20: anima.Anima.Issue:input_type -> anima.IssueRequest
 	7,  // 21: anima.Anima.Verify:input_type -> anima.VerifyRequest
-	6,  // 22: anima.Anima.Issue:output_type -> anima.IssueResponse
-	8,  // 23: anima.Anima.Verify:output_type -> anima.VerifyResponse
-	22, // [22:24] is the sub-list for method output_type
-	20, // [20:22] is the sub-list for method input_type
+	21, // 22: anima.Anima.RegisterVerifier:input_type -> anima.RegisterVerifierRequest
+	6,  // 23: anima.Anima.Issue:output_type -> anima.IssueResponse
+	8,  // 24: anima.Anima.Verify:output_type -> anima.VerifyResponse
+	22, // 25: anima.Anima.RegisterVerifier:output_type -> anima.RegisterVerifierResponse
+	23, // [23:26] is the sub-list for method output_type
+	20, // [20:23] is the sub-list for method input_type
 	20, // [20:20] is the sub-list for extension type_name
 	20, // [20:20] is the sub-list for extension extendee
 	0,  // [0:20] is the sub-list for field type_name
@@ -1913,6 +2042,30 @@ func file_protocol_protocol_proto_init() {
 				return nil
 			}
 		}
+		file_protocol_protocol_proto_msgTypes[21].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*RegisterVerifierRequest); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_protocol_protocol_proto_msgTypes[22].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*RegisterVerifierResponse); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
 	}
 	type x struct{}
 	out := protoimpl.TypeBuilder{
@@ -1920,7 +2073,7 @@ func file_protocol_protocol_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: file_protocol_protocol_proto_rawDesc,
 			NumEnums:      0,
-			NumMessages:   23,
+			NumMessages:   25,
 			NumExtensions: 0,
 			NumServices:   1,
 		},
@@ -1948,6 +2101,7 @@ const _ = grpc.SupportPackageIsVersion6
 type AnimaClient interface {
 	Issue(ctx context.Context, in *IssueRequest, opts ...grpc.CallOption) (*IssueResponse, error)
 	Verify(ctx context.Context, in *VerifyRequest, opts ...grpc.CallOption) (*VerifyResponse, error)
+	RegisterVerifier(ctx context.Context, in *RegisterVerifierRequest, opts ...grpc.CallOption) (*RegisterVerifierResponse, error)
 }
 
 type animaClient struct {
@@ -1976,10 +2130,20 @@ func (c *animaClient) Verify(ctx context.Context, in *VerifyRequest, opts ...grp
 	return out, nil
 }
 
+func (c *animaClient) RegisterVerifier(ctx context.Context, in *RegisterVerifierRequest, opts ...grpc.CallOption) (*RegisterVerifierResponse, error) {
+	out := new(RegisterVerifierResponse)
+	err := c.cc.Invoke(ctx, "/anima.Anima/RegisterVerifier", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // AnimaServer is the server API for Anima service.
 type AnimaServer interface {
 	Issue(context.Context, *IssueRequest) (*IssueResponse, error)
 	Verify(context.Context, *VerifyRequest) (*VerifyResponse, error)
+	RegisterVerifier(context.Context, *RegisterVerifierRequest) (*RegisterVerifierResponse, error)
 }
 
 // UnimplementedAnimaServer can be embedded to have forward compatible implementations.
@@ -1991,6 +2155,9 @@ func (*UnimplementedAnimaServer) Issue(context.Context, *IssueRequest) (*IssueRe
 }
 func (*UnimplementedAnimaServer) Verify(context.Context, *VerifyRequest) (*VerifyResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method Verify not implemented")
+}
+func (*UnimplementedAnimaServer) RegisterVerifier(context.Context, *RegisterVerifierRequest) (*RegisterVerifierResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method RegisterVerifier not implemented")
 }
 
 func RegisterAnimaServer(s *grpc.Server, srv AnimaServer) {
@@ -2033,6 +2200,24 @@ func _Anima_Verify_Handler(srv interface{}, ctx context.Context, dec func(interf
 	return interceptor(ctx, in, info, handler)
 }
 
+func _Anima_RegisterVerifier_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(RegisterVerifierRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(AnimaServer).RegisterVerifier(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/anima.Anima/RegisterVerifier",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(AnimaServer).RegisterVerifier(ctx, req.(*RegisterVerifierRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 var _Anima_serviceDesc = grpc.ServiceDesc{
 	ServiceName: "anima.Anima",
 	HandlerType: (*AnimaServer)(nil),
@@ -2044,6 +2229,10 @@ var _Anima_serviceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "Verify",
 			Handler:    _Anima_Verify_Handler,
+		},
+		{
+			MethodName: "RegisterVerifier",
+			Handler:    _Anima_RegisterVerifier_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

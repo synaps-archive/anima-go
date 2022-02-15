@@ -135,8 +135,18 @@ message AnimaIssuer {
     string chain = 3;    
 }
 
+message RegisterVerifierRequest {
+    string id = 1;
+    string public_address = 2;
+    string chain = 3;
+}
+
+message RegisterVerifierResponse {
+    bool success = 1;
+}
 
 service Anima {
     rpc Issue(IssueRequest) returns (IssueResponse) {};
     rpc Verify(VerifyRequest) returns (VerifyResponse) {};
+    rpc RegisterVerifier(RegisterVerifierRequest) returns (RegisterVerifierResponse) {};
 }
