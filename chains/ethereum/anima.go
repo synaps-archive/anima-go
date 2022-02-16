@@ -199,7 +199,7 @@ func SignRequest(protocol *models.Protocol, req interface{}, signingFunc func([]
 func SignProof(protocol *models.Protocol, proof string, signingFunc func([]byte) (string, error)) (string, string, error) {
 	message := make(map[string]interface{})
 
-	message["content"] = crypto.Hash([]byte(proof))
+	message["content"] = proof
 
 	sigRequest := apitypes.TypedData{
 		Domain: apitypes.TypedDataDomain{
