@@ -4,6 +4,7 @@ type Protocol struct {
 	Network     string                       `json:"network"`
 	Chain       string                       `json:"chain"`
 	SigningFunc func([]byte) (string, error) `json:"signing_func"`
+	Secure      bool                         `json:"secure"`
 }
 
 type AnimaOwner struct {

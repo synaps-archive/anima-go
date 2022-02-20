@@ -11,7 +11,7 @@ import (
 )
 
 func Issue(anima *models.Protocol, req *IssueRequest) error {
-	config := &Config{Secure: false}
+	config := &Config{Secure: anima.Secure}
 	client, err := Init(config, anima)
 	if err != nil {
 		return err
