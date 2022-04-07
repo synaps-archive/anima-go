@@ -9,15 +9,16 @@ import (
 	"google.golang.org/grpc/credentials"
 )
 
-var Client AnimaClient
+var client AnimaClient
 
 type Config struct {
 	Secure bool
 }
 
 // Init - Initialize New Client
-func Init(config *Config, protocol *models.Protocol) (AnimaClient, error) {
-	if Client == nil {
+func Init(config *Config, protocol *models.Protocol) error {
+	if client == nil {
+		fmt.Printf("-> Anima Client")
 		creds := credentials.NewTLS(&tls.Config{
 			InsecureSkipVerify: true,
 		})
@@ -30,13 +31,14 @@ func Init(config *Config, protocol *models.Protocol) (AnimaClient, error) {
 			opts = append(opts, grpc.WithInsecure())
 		}
 
+		fmt.Printf("-> network: %v\n", protocol.Network)
 		cc, err := grpc.Dial(protocol.Network, opts...)
 		if err != nil {
-			return nil, fmt.Errorf("could not connect to GRPC Server")
+			return fmt.Errorf("could not connect to GRPC Server")
 		}
 
-		Client = NewAnimaClient(cc)
+		client = NewAnimaClient(cc)
 	}
 
-	return Client, nil
+	return nil
 }

@@ -4,7 +4,7 @@ import (
 	context "context"
 	"errors"
 
-	"github.com/anima-protocol/anima-go/chains/ethereum"
+	"github.com/anima-protocol/anima-go/chains/evm"
 	"github.com/anima-protocol/anima-go/models"
 	"github.com/anima-protocol/anima-go/utils"
 	"google.golang.org/grpc/metadata"
@@ -12,7 +12,7 @@ import (
 
 func Issue(anima *models.Protocol, req *IssueRequest) error {
 	config := &Config{Secure: anima.Secure}
-	client, err := Init(config, anima)
+	err := Init(config, anima)
 	if err != nil {
 		return err
 	}
@@ -21,7 +21,7 @@ func Issue(anima *models.Protocol, req *IssueRequest) error {
 		return errors.New("unsupported chain")
 	}
 
-	signature, err := ethereum.SignRequest(anima, req, anima.SigningFunc)
+	signature, err := evm.SignProtocolRequest(anima, req, anima.SigningFunc)
 	if err != nil {
 		return err
 	}
@@ -37,7 +37,7 @@ func Issue(anima *models.Protocol, req *IssueRequest) error {
 
 func Verify(anima *models.Protocol, req *VerifyRequest) (*VerifyResponse, error) {
 	config := &Config{Secure: anima.Secure}
-	client, err := Init(config, anima)
+	err := Init(config, anima)
 	if err != nil {
 		return &VerifyResponse{}, err
 	}
@@ -46,7 +46,7 @@ func Verify(anima *models.Protocol, req *VerifyRequest) (*VerifyResponse, error)
 		return &VerifyResponse{}, errors.New("unsupported chain")
 	}
 
-	signature, err := ethereum.SignRequest(anima, req, anima.SigningFunc)
+	signature, err := evm.SignProtocolRequest(anima, req, anima.SigningFunc)
 	if err != nil {
 		return &VerifyResponse{}, err
 	}
@@ -64,7 +64,7 @@ func Verify(anima *models.Protocol, req *VerifyRequest) (*VerifyResponse, error)
 
 func RegisterVerifier(anima *models.Protocol, req *RegisterVerifierRequest) (*RegisterVerifierResponse, error) {
 	config := &Config{Secure: anima.Secure}
-	client, err := Init(config, anima)
+	err := Init(config, anima)
 	if err != nil {
 		return &RegisterVerifierResponse{}, err
 	}
@@ -73,7 +73,7 @@ func RegisterVerifier(anima *models.Protocol, req *RegisterVerifierRequest) (*Re
 		return &RegisterVerifierResponse{}, errors.New("unsupported chain")
 	}
 
-	signature, err := ethereum.SignRequest(anima, req, anima.SigningFunc)
+	signature, err := evm.SignProtocolRequest(anima, req, anima.SigningFunc)
 	if err != nil {
 		return &RegisterVerifierResponse{}, err
 	}

@@ -1,4 +1,4 @@
-package ethereum
+package evm
 
 import (
 	"encoding/hex"
@@ -50,6 +50,7 @@ func VerifySignature(publicAddress string, data []byte, userSignature string) (b
 	}
 
 	recoveredAddr := crypto.PubkeyToAddress(*pubKey)
+	fmt.Printf("-> recovered_addr = %v\n", recoveredAddr)
 	if !strings.EqualFold(recoveredAddr.String(), publicAddress) {
 		return false, fmt.Errorf("public address and signer address does not match")
 	}

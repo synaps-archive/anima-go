@@ -5,38 +5,65 @@ option go_package="protocol/;protocol";
 
 message Empty {}
 
-message IssueRequest {
-    IssueResource resource = 1;
-    IssueVerification verification = 2;
-    IssueAuthorization issuing_authorization = 3;
+message IssCredential {
+    IssCredentialContent content = 1;
+    string signature = 2;
 }
 
-message IssueResource {
+message IssCredentialSource {
     string id = 1;
-    string expires_at = 2;
-    map<string, IssueAttribute> attributes = 3;
+    string specs = 2;   
 }
 
-message IssueAttribute {
+message IssCredentialContent {
+    int64 issued_at = 1;
+    int64 expires_at = 2;
+    string name = 3;
+    string type = 4;
+    string format = 5;
+    string hash = 6;
+    IssCredentialSource source = 7;
+    AnimaOwner owner = 8;
+    AnimaIssuer issuer = 9;
+}
+
+message IssueRequest {
+    IssDocument document = 1;
+    map<string, IssAttributeCredential> attributes = 2;
+    IssProof proof = 3;
+}
+
+message IssAttributeCredential {
     bytes value = 1;
+    IssCredential credential = 2;
+}
+
+message IssAuthorization {
+    string specs = 1;
     string content = 2;
     string signature = 3;
 }
 
-message IssueVerification {
-    string schema = 1;
-    string content = 2;
-    string signature = 3;
+message IssAttribute {
+    string name = 1;
+    string type = 2;
+    string format = 3;
+    string value = 4;
 }
 
-message IssueAuthorization {
-    string schema = 1;
-    string content = 2;
-    string signature = 3;
+message IssDocument {
+    string specs = 1;
+    int64 issued_at = 2;
+    int64 expires_at = 3;
+    map<string, IssAttribute> attributes = 4;
+    AnimaOwner owner = 5;
+    IssAuthorization issuing_authorization = 6;
 }
 
-message IssueResponse {
-    bool success = 1;
+message IssProof {
+    string specs = 1;
+    string content = 2;
+    string signature = 3;
 }
 
 message VerifyRequest {
@@ -70,10 +97,10 @@ message SharingAuthorization {
 message VerificationResource {
     string id = 1;
     string credential = 2;
-    string expires_at = 3;
-    string issued_at = 4;
-    string shared_at = 5;
-    string verified_at = 6;
+    int64 expires_at = 3;
+    int64 issued_at = 4;
+    int64 shared_at = 5;
+    int64 verified_at = 6;
     string type = 7;
     map<string, AnimaCredentialAttribute> attributes = 8;
 }
@@ -92,7 +119,7 @@ message AnimaCredentialAttributeContent {
 
 message AnimaCredentialAttributeResource {
     string id = 1;
-    string expires_at = 2;
+    int64 expires_at = 2;
 }
 
 message Attribute {
@@ -146,7 +173,7 @@ message RegisterVerifierResponse {
 }
 
 service Anima {
-    rpc Issue(IssueRequest) returns (IssueResponse) {};
+    rpc Issue(IssueRequest) returns (Empty) {};
     rpc Verify(VerifyRequest) returns (VerifyResponse) {};
     rpc RegisterVerifier(RegisterVerifierRequest) returns (RegisterVerifierResponse) {};
 }
