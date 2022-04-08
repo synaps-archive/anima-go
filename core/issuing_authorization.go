@@ -8,9 +8,9 @@ import (
 )
 
 func GetIssuingAuthorization(request *protocol.IssueRequest) (*models.IssuingAuthorization, error) {
-	specs := request.Document.IssuingAuthorization.Specs
-	encodedContent := request.Document.IssuingAuthorization.Content
-	signature := request.Document.IssuingAuthorization.Signature
+	specs := request.Document.Authorization.Specs
+	encodedContent := request.Document.Authorization.Content
+	signature := request.Document.Authorization.Signature
 
 	content, err := base64.StdEncoding.DecodeString(encodedContent)
 	if err != nil {

@@ -5,37 +5,19 @@ option go_package="protocol/;protocol";
 
 message Empty {}
 
-message IssCredential {
-    IssCredentialContent content = 1;
-    string signature = 2;
-}
-
-message IssCredentialSource {
-    string id = 1;
-    string specs = 2;   
-}
-
-message IssCredentialContent {
-    int64 issued_at = 1;
-    int64 expires_at = 2;
-    string name = 3;
-    string type = 4;
-    string format = 5;
-    string hash = 6;
-    IssCredentialSource source = 7;
-    AnimaOwner owner = 8;
-    AnimaIssuer issuer = 9;
-}
-
 message IssueRequest {
     IssDocument document = 1;
-    map<string, IssAttributeCredential> attributes = 2;
+    map<string, IssAttribute> attributes = 2;
     IssProof proof = 3;
 }
 
-message IssAttributeCredential {
-    bytes value = 1;
-    IssCredential credential = 2;
+message IssDocument {
+    string specs = 1;
+    int64 issued_at = 2;
+    int64 expires_at = 3;
+    map<string, IssDocumentAttribute> attributes = 4;
+    AnimaOwner owner = 5;
+    IssAuthorization authorization = 6;
 }
 
 message IssAuthorization {
@@ -44,20 +26,60 @@ message IssAuthorization {
     string signature = 3;
 }
 
-message IssAttribute {
-    string name = 1;
-    string type = 2;
-    string format = 3;
-    string value = 4;
+message IssDocumentAttribute {
+    IssDocumentAttributeContent content = 1;
+    IssDocumentAttributeCredential credential = 2;
 }
 
-message IssDocument {
-    string specs = 1;
-    int64 issued_at = 2;
-    int64 expires_at = 3;
-    map<string, IssAttribute> attributes = 4;
+message IssDocumentAttributeContent {
+    string value = 1;
+    string type = 2;
+    string format = 3;
+    string name = 4;
     AnimaOwner owner = 5;
-    IssAuthorization issuing_authorization = 6;
+    IssAuthorization authorization = 6;
+}
+
+message IssDocumentAttributeCredential {
+    string specs = 1;
+    string id = 2;
+}
+
+message IssAttribute {
+    bytes value = 1;
+    IssDocumentAttributeContent content = 2;
+    IssAttributeCredential credential = 3;
+}
+
+message IssAttributeCredential {
+    IssAttributeCredentialContent content = 1;
+    string signature = 2;
+}
+
+message IssAttributeCredentialContent {
+    int64 issued_at = 1;
+    int64 expires_at = 2;
+    string hash = 6;
+    AnimaOwner owner = 8;
+    AnimaIssuer issuer = 9;
+    IssAttributeCredentialContentDocument document = 10;
+    IssAttributeCredentialContentAttribute attribute = 11;
+    IssAttributeCredentialContentProof proof = 12;
+}
+
+message IssAttributeCredentialContentDocument {
+    string id = 1;
+    string specs = 2;
+}
+
+message IssAttributeCredentialContentProof {
+    string id = 1;
+    string specs = 2;
+}
+
+message IssAttributeCredentialContentAttribute {
+    string id = 1;
+    string specs = 2;
 }
 
 message IssProof {
