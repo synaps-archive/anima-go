@@ -86,12 +86,13 @@ func SignIssuing(anima *models.Protocol, issuer *protocol.AnimaIssuer, request *
 		request.Attributes[name].Credential.Content = &protocol.IssAttributeCredentialContent{
 			IssuedAt:  issuedAt,
 			ExpiresAt: request.Document.ExpiresAt,
-			Hash:      contentHash,
 			Owner:     owner,
 			Issuer:    issuer,
 			Attribute: &protocol.IssAttributeCredentialContentAttribute{
 				Specs: "anima:specs:attribute@1.0.0",
 				Id:    fmt.Sprintf("anima:attribute:%s", crypto.Hash(attrContentBytes.Bytes())),
+				Hash:  contentHash,
+				Name:  name,
 			},
 			Proof: &protocol.IssAttributeCredentialContentProof{
 				Specs: request.Proof.Specs,

@@ -59,12 +59,11 @@ message IssAttributeCredential {
 message IssAttributeCredentialContent {
     int64 issued_at = 1;
     int64 expires_at = 2;
-    string hash = 6;
-    AnimaOwner owner = 8;
-    AnimaIssuer issuer = 9;
-    IssAttributeCredentialContentDocument document = 10;
-    IssAttributeCredentialContentAttribute attribute = 11;
-    IssAttributeCredentialContentProof proof = 12;
+    AnimaOwner owner = 4;
+    AnimaIssuer issuer = 5;
+    IssAttributeCredentialContentDocument document = 6;
+    IssAttributeCredentialContentAttribute attribute = 7;
+    IssAttributeCredentialContentProof proof = 8;
 }
 
 message IssAttributeCredentialContentDocument {
@@ -80,6 +79,8 @@ message IssAttributeCredentialContentProof {
 message IssAttributeCredentialContentAttribute {
     string id = 1;
     string specs = 2;
+    string name = 3;
+    string hash = 4;
 }
 
 message IssProof {
@@ -89,15 +90,12 @@ message IssProof {
 }
 
 message VerifyRequest {
-    string schema = 1;
-    string content = 2;
-    string signature = 3;
+    SharingAuthorization authorization = 1;
 }
 
 message VerifyResponse {
-    string schema = 1;
-    VerificationContent content = 2;
-    string signature = 3;
+    VerificationContent content = 1;
+    string signature = 2;
 }
 
 message VerificationContent {
@@ -106,63 +104,52 @@ message VerificationContent {
     AnimaIssuer issuer = 3;
     AnimaProtocol protocol = 4;
     VerificationProof proof = 5;
-    VerificationResource resource = 6;
+    map<string, AnimaCredentialAttribute> credentials = 6;
     SharingAuthorization authorization = 7;
 }
 
+message AnimaDocument {
+    string id = 1;
+    string specs = 2;
+}
+
+message AnimaAttribute {
+    string id = 1;
+    string specs = 2;
+}
+
+message AnimaProof {
+    string id = 1;
+    string specs = 2;
+}
+
+message AnimaCredentialAttribute {
+    AnimaOwner owner = 1;
+    AnimaIssuer issuer = 2;
+    AnimaDocument document = 3;
+    AnimaAttribute attribute = 4;
+    AnimaProof proof = 5;
+    int64 issued_at = 6;
+    int64 expires_at = 7;
+    string hash = 8;
+}
+
 message SharingAuthorization {
-    string schema = 1;
+    string specs = 1;
     string content = 2;
     string signature = 3;
 }
 
-message VerificationResource {
-    string id = 1;
-    string credential = 2;
-    int64 expires_at = 3;
-    int64 issued_at = 4;
-    int64 shared_at = 5;
-    int64 verified_at = 6;
-    string type = 7;
-    map<string, AnimaCredentialAttribute> attributes = 8;
-}
-
-message AnimaCredentialAttribute {
-    AnimaCredentialAttributeContent content = 1;
-    string signature = 2;
-}
-
-message AnimaCredentialAttributeContent {
-    AnimaCredentialAttributeResource resource = 1;
-    Attribute attribute = 2;
-    AnimaOwner owner = 3;
-    AnimaIssuer issuer = 4;
-}
-
-message AnimaCredentialAttributeResource {
-    string id = 1;
-    int64 expires_at = 2;
-}
-
-message Attribute {
-    string name = 1;
-    string type = 2;
-    string value = 3;
-}
-
-
 message VerificationProof {
-    string schema = 1;
+    string specs = 1;
     string content = 2;
-    string data = 3;
-    string signature = 4;
+    string signature = 3;
 }
 
 message AnimaVerifier {
     string id = 1;
     string public_address = 2;
     string chain = 3;
-
 }
 
 message AnimaOwner {
