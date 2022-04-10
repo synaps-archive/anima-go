@@ -127,11 +127,10 @@ message AnimaCredentialAttribute {
     AnimaOwner owner = 1;
     AnimaIssuer issuer = 2;
     AnimaDocument document = 3;
-    AnimaAttribute attribute = 4;
+    IssAttributeCredentialContentAttribute attribute = 4;
     AnimaProof proof = 5;
     int64 issued_at = 6;
     int64 expires_at = 7;
-    string hash = 8;
 }
 
 message SharingAuthorization {
@@ -175,6 +174,9 @@ message RegisterVerifierRequest {
     string id = 1;
     string public_address = 2;
     string chain = 3;
+    bytes logo = 4;
+    string description = 5;
+    string name = 6;
 }
 
 message RegisterVerifierResponse {
