@@ -31,12 +31,9 @@ func SignIssuing(anima *models.Protocol, issuer *protocol.AnimaIssuer, request *
 		return nil, err
 	}
 
-	c := map[string]interface{}{}
-	json.Unmarshal(proofContentBytes.Bytes(), &c)
-
 	switch anima.Chain {
 	case models.CHAIN_ETH:
-		proofSignature, err := evm.SignCredential(anima, c, signingFunc)
+		proofSignature, err := evm.SignProof(anima, proofContent, signingFunc)
 		if err != nil {
 			return nil, err
 		}
