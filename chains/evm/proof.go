@@ -10,21 +10,16 @@ import (
 	"github.com/ethereum/go-ethereum/signer/core/apitypes"
 )
 
-func SignCredential(protocol *models.Protocol, credentialContent interface{}, signingFunc func([]byte) (string, error)) (string, error) {
+func SignProof(protocol *models.Protocol, content []byte, signingFunc func([]byte) (string, error)) (string, error) {
 	message := make(map[string]interface{})
 
-	b, err := json.Marshal(&credentialContent)
+	contentBytes := new(bytes.Buffer)
+	err := json.Compact(contentBytes, content)
 	if err != nil {
 		return "", err
 	}
 
-	credentialContentBytes := new(bytes.Buffer)
-	err = json.Compact(credentialContentBytes, b)
-	if err != nil {
-		return "", err
-	}
-
-	message["content"] = crypto.Hash(credentialContentBytes.Bytes())
+	message["content"] = crypto.Hash(contentBytes.Bytes())
 
 	sigRequest := apitypes.TypedData{
 		Domain: apitypes.TypedDataDomain{
